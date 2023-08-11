@@ -1,27 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+@import url("//cdn.web-fonts.ge/fonts/bpg-nino-mtavruli-bold/css/bpg-nino-mtavruli-bold.min.css");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+body{
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  font-family: 'Poppins',"BPG Nino Mtavruli Bold", sans-serif;
+  /* font-family: "BPG Nino Mtavruli Bold", sans-serif; */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+
+table {
+  /* font-family: Arial, Helvetica, sans-serif; */
+  border-collapse: collapse;
+  width: 100%;
+  font-weight: 500;
+  /* margin: 0 auto; */
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  font: 900;
+
+}
+
+
+
+table th{
+  border: 1px solid rgba(0,0,0,.1);
+  padding: 8px;
+}
+
+table tr:nth-child(even){background-color: #f2f2f2;
+  font: 600;
+}
+
+table tr:hover {background-color: #ddd;
+  font: 600;
+}
+
+table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  font: 600;
+
+}
+
+
+.gradient{
+  border-image: linear-gradient(139deg, #fb8817, #ff4b01, #c12127, #e02aff) 3;
+  position: relative;
+padding: 8px 0;
+border-width: 10px 0 0;
+border-top-style: solid;
 }
