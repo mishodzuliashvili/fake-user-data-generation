@@ -1,44 +1,44 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
-@import url("//cdn.web-fonts.ge/fonts/bpg-nino-mtavruli-bold/css/bpg-nino-mtavruli-bold.min.css");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body{
+body {
   background-color: #ffffff;
   color: rgb(0, 0, 0);
-  font-family: 'Poppins',"BPG Nino Mtavruli Bold", sans-serif;
-  /* font-family: "BPG Nino Mtavruli Bold", sans-serif; */
 }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-
+body {
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+}
 table {
-  /* font-family: Arial, Helvetica, sans-serif; */
   border-collapse: collapse;
   width: 100%;
   font-weight: 500;
-  /* margin: 0 auto; */
 }
 
 table td {
   border: 1px solid #ddd;
   padding: 8px;
   font: 900;
-
 }
 
-
-
-table th{
-  border: 1px solid rgba(0,0,0,.1);
+table th {
+  border: 1px solid rgba(0, 0, 0, .1);
   padding: 8px;
+
 }
 
-table tr:nth-child(even){background-color: #f2f2f2;
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
   font: 600;
 }
 
-table tr:hover {background-color: #ddd;
+table tr:hover {
+  background-color: #ddd;
   font: 600;
 }
 
@@ -49,14 +49,73 @@ table th {
   background-color: #ffffff;
   color: rgb(0, 0, 0);
   font: 600;
+}
+.mobile{
+  display: none;
+}
+@media screen and (max-width: 800px) {
+  table td{
+    display: flex;
+    width: 100%;
+  }
+  table thead{
+    display: none;
+  }
+  table tr{
+    width: 100%;
+    display: block;
+    margin-bottom: 0.8rem;
+  }
 
+  /* first td in tr */
+  table tr td:nth-child(1){
+    text-align: left;
+    background-color: black;
+    color: white;
+  }
+
+  table tr td{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .mobile{
+    display: block;
+  }
+}
+table td{
+  word-break: break-all;
+
+}
+.gradient {
+  border-image: linear-gradient(139deg, #fb8817, #ff4b01, #c12127, #e02aff) 3;
+  position: relative;
+  border-width: 10px 0 0;
+  border-top-style: solid;
 }
 
 
-.gradient{
+table th:nth-child(1) {
+  width: 5%; /* Adjust the width as needed */
+}
+
+table th:nth-child(2) {
+  width: 20%; /* Adjust the width as needed */
+}
+
+table th:nth-child(3) {
+  width: 15%; /* Adjust the width as needed */
+}
+table th:nth-child(4) {
+  width: 30%; /* Adjust the width as needed */
+}
+table th:nth-child(5) {
+  width: 50%; /* Adjust the width as needed */
+}
+
+.gradient {
   border-image: linear-gradient(139deg, #fb8817, #ff4b01, #c12127, #e02aff) 3;
   position: relative;
-padding: 8px 0;
-border-width: 10px 0 0;
-border-top-style: solid;
+  border-width: 10px 0 0;
+  border-top-style: solid;
 }

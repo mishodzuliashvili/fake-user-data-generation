@@ -9,23 +9,36 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@json2csv/plainjs": "^7.0.1",
     "@types/node": "20.4.9",
     "@types/react": "18.2.20",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.14",
     "cldr-core": "^43.1.0",
+    "download": "^8.0.0",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.13",
+    "fast-csv": "^4.3.6",
     "lodash": "^4.17.21",
     "next": "13.4.13",
     "postcss": "8.4.27",
+    "rc-slider": "^10.2.1",
     "react": "18.2.0",
+    "react-csv-downloader": "^2.9.1",
     "react-dom": "18.2.0",
+    "react-hyper-responsive-table": "1.0.0-rc.0",
+    "react-icons": "^4.10.1",
+    "react-infinite-scroll-component": "^6.1.0",
+    "react-range": "^1.8.14",
+    "react-range-slider-input": "^3.0.7",
+    "react-select": "^5.7.4",
+    "react-super-responsive-table": "^5.2.1",
     "tailwindcss": "3.3.3",
     "typescript": "5.1.6"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
-    "@types/lodash": "^4.14.197"
+    "@types/lodash": "^4.14.197",
+    "@types/rc-slider": "^9.3.1"
   }
 }
