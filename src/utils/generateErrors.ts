@@ -1,6 +1,13 @@
 import { Region, TypeOfAttribute, User } from "@/types";
 import { Faker } from "@faker-js/faker";
 
+type AlteredAttribute =
+  | "firstName"
+  | "middleName"
+  | "lastName"
+  | "address"
+  | "phoneNumber";
+
 function generateErrorCharacter(
   alphabet: string[],
   typeOfAttribute: TypeOfAttribute,
@@ -23,28 +30,28 @@ function swapCharacters(attributeValueArray: string[], errorPosition: number) {
     ];
 }
 
-function alterUserAttribute(
-  user: User,
-  attribute:
-    | "firstName"
-    | "middleName"
-    | "lastName"
-    | "address"
-    | "phoneNumber",
-  typeOfAttribute: TypeOfAttribute,
-  alphabet: string[],
-  faker: Faker
+function getRandomAttribute(region: Region) {
+  const attributes = [
+    { value: "firstName", type: "alpha" },
+    ...(region.hasMiddleName ? [{ value: "middleName", type: "alpha" }] : []),
+    { value: "lastName", type: "alpha" },
+    { value: "address", type: "alphanumeric" },
+    { value: "phoneNumber", type: "numeric" },
+  ];
+
+  return region.faker.helpers.arrayElement(attributes) as {
+    value: AlteredAttribute;
+    type: TypeOfAttribute;
+  };
+}
+
+function makeError(
+  attributeValue: string,
+  errorType: number,
+  errorCharacter: string,
+  errorPosition: number
 ) {
-  const errorPosition = faker.number.int({
-    max: ((user[attribute] as any).length || 1) - 1,
-  });
-  const errorType = faker.number.int({ max: 2 });
-  let errorCharacter = generateErrorCharacter(
-    alphabet,
-    typeOfAttribute,
-    faker
-  ) as string;
-  let attributeValueArray = (user[attribute] as any).split("");
+  let attributeValueArray = attributeValue.split("");
   if (errorType === 0) {
     attributeValueArray[errorPosition] = "";
   } else if (errorType === 1) {
@@ -52,7 +59,36 @@ function alterUserAttribute(
   } else {
     swapCharacters(attributeValueArray, errorPosition);
   }
-  user[attribute] = attributeValueArray.join("");
+  return attributeValueArray.join("");
+}
+
+function introduceSingleError(
+  user: User,
+  attribute: AlteredAttribute,
+  typeOfAttribute: TypeOfAttribute,
+  alphabet: string[],
+  faker: Faker
+) {
+  const errorPosition = faker.number.int({
+    max: (user[attribute].length || 1) - 1,
+  });
+  const errorType = faker.number.int({ max: 2 });
+  let errorCharacter = generateErrorCharacter(alphabet, typeOfAttribute, faker);
+  user[attribute] = makeError(
+    user[attribute],
+    errorType,
+    errorCharacter,
+    errorPosition
+  );
+}
+
+function getErrorCount(region: Region, errorCount: number) {
+  const integerPart = Math.floor(errorCount);
+  const fractionalPart = errorCount - integerPart;
+  const randomNumber = region.faker.number.float({ max: 0.99 });
+  const howManyTimes =
+    randomNumber < fractionalPart ? integerPart + 1 : integerPart;
+  return howManyTimes;
 }
 
 export function introduceErrors(
@@ -61,34 +97,13 @@ export function introduceErrors(
   region: Region
 ) {
   return users.map((user) => {
-    const integerPart = Math.floor(errorCount);
     user = {
       ...user,
     };
-    const fractionalPart = errorCount - integerPart;
-    const randomNumber = region.faker.number.float({ max: 0.99 });
-    const howManyTimes =
-      randomNumber < fractionalPart ? integerPart + 1 : integerPart;
-    for (let i = 0; i < howManyTimes; i++) {
-      let attribute;
-
-      if (!region.hasMiddleName) {
-        attribute = region.faker.helpers.arrayElement([
-          { value: "firstName", type: "alpha" },
-          { value: "lastName", type: "alpha" },
-          { value: "address", type: "alphanumeric" },
-          { value: "phoneNumber", type: "numeric" },
-        ] as Array<{ value: "firstName" | "middleName" | "lastName" | "address" | "phoneNumber"; type: TypeOfAttribute }>);
-      } else {
-        attribute = region.faker.helpers.arrayElement([
-          { value: "firstName", type: "alpha" },
-          { value: "middleName", type: "alpha" },
-          { value: "lastName", type: "alpha" },
-          { value: "address", type: "alphanumeric" },
-          { value: "phoneNumber", type: "numeric" },
-        ] as Array<{ value: "firstName" | "middleName" | "lastName" | "address" | "phoneNumber"; type: TypeOfAttribute }>);
-      }
-      alterUserAttribute(
+    const numberOfErrors = getErrorCount(region, errorCount);
+    for (let i = 0; i < numberOfErrors; i++) {
+      const attribute = getRandomAttribute(region);
+      introduceSingleError(
         user,
         attribute.value,
         attribute.type,

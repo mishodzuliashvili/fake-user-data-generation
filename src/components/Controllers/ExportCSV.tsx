@@ -6,20 +6,22 @@ import { Parser } from "@json2csv/plainjs";
 const ExportCSV = () => {
   const { erroredUsers, region } = useTable();
 
-  const dataOfUsers = erroredUsers.map((user) => {
-    if (region.hasMiddleName) {
-      return user;
-    } else {
-      const newUser = { ...user } as any;
-      delete newUser.middleName;
-      return newUser;
-    }
-  });
+  const getDataOfUsers = () => {
+    return erroredUsers.map((user) => {
+      if (region.hasMiddleName) {
+        return user;
+      } else {
+        const newUser = { ...user } as any;
+        delete newUser.middleName;
+        return newUser;
+      }
+    });
+  };
 
   const handleExport = () => {
     try {
       const parser = new Parser({});
-      const csv = parser.parse(dataOfUsers);
+      const csv = parser.parse(getDataOfUsers());
       downloadCsv("fake_user_data.csv", csv);
     } catch (err) {
       console.error(err);

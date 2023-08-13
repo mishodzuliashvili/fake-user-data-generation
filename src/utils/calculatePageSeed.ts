@@ -1,7 +1,3 @@
-export default function calculatePageSeed(
-  page: number,
-  pageSize: number,
-  userSeed: number
-) {
-  return userSeed + page * pageSize;
+export default function calculatePageSeed(page: number, userSeed: number) {
+  return userSeed + page;
 }

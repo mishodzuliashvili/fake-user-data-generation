@@ -33,12 +33,11 @@ export function TableProvider({ children }: { children: React.ReactNode }) {
   const [generateRandomUser, setGenerateRandomUser] = useState<any>(null);
 
   const fetchUsers = (pageSize = USERS_PER_PAGE, pageNum: number) => {
-    const pageSeed = calculatePageSeed(pageNum, pageSize, userSeed);
-    region.faker.seed(pageSeed);
+    applySeed(pageNum);
     const newUsers = Array.from({ length: pageSize }, () =>
       generateRandomUser()
     );
-    region.faker.seed(pageSeed);
+    applySeed(pageNum);
     const newErrorUsers = introduceErrors(newUsers, errorAmount, region);
     return {
       newUsers,
@@ -66,25 +65,24 @@ export function TableProvider({ children }: { children: React.ReactNode }) {
     }
   }, [generateRandomUser]);
 
-  function fetchErroredUsers(
-    untilPage: number,
-    firstPageSize = 20,
-    pageSize = USERS_PER_PAGE
-  ) {
-    // TODO: Make this shorter somehow
-    const erroredUsers: User[] = [];
-    const pageSeed = calculatePageSeed(1, firstPageSize, userSeed);
+  function getUsersByPage(pageNum: number) {
+    const startIndex =
+      pageNum === 1 ? 0 : FIRST_PAGE_SIZE + (pageNum - 2) * USERS_PER_PAGE;
+    const endIndex = FIRST_PAGE_SIZE + (pageNum - 1) * USERS_PER_PAGE;
+    const normalUsers = users.slice(startIndex, endIndex);
+    return normalUsers;
+  }
+
+  function applySeed(pageNum: number) {
+    const pageSeed = calculatePageSeed(pageNum, userSeed);
     region.faker.seed(pageSeed);
-    const normalUsers = users.slice(0, firstPageSize);
-    const newErrorUsers = introduceErrors(normalUsers, errorAmount, region);
-    erroredUsers.push(...newErrorUsers);
-    for (let i = 2; i <= untilPage; i++) {
-      const pageSeed = calculatePageSeed(i, pageSize, userSeed);
-      region.faker.seed(pageSeed);
-      const normalUsers = users.slice(
-        firstPageSize + (i - 2) * pageSize,
-        firstPageSize + (i - 1) * pageSize
-      );
+  }
+
+  function getErroredUsers(untilPage: number) {
+    const erroredUsers: User[] = [];
+    for (let i = 1; i <= untilPage; i++) {
+      applySeed(i);
+      const normalUsers = getUsersByPage(i);
       const newErrorUsers = introduceErrors(normalUsers, errorAmount, region);
       erroredUsers.push(...newErrorUsers);
     }
@@ -93,7 +91,7 @@ export function TableProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (generateRandomUser) {
-      const newErrorUsers = fetchErroredUsers(page, 20, USERS_PER_PAGE);
+      const newErrorUsers = getErroredUsers(page);
       setErroredUsers(newErrorUsers);
     }
   }, [errorAmount]);
