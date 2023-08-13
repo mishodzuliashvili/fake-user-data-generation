@@ -1,0 +1,96 @@
+.responsive-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-weight: 500;
+}
+
+.responsive-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  font: 900;
+}
+
+.responsive-table th {
+  border: 1px solid rgba(0, 0, 0, .1);
+  padding: 8px;
+}
+
+.responsive-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+  font: 600;
+}
+
+.responsive-table tr:hover {
+  background-color: #ddd;
+  font: 600;
+}
+
+.responsive-table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  font: 600;
+}
+
+.mobile {
+  display: none;
+}
+
+@media screen and (max-width: 800px) {
+  .responsive-table td {
+    display: flex;
+    width: 100%;
+  }
+
+  .responsive-table thead {
+    display: none;
+  }
+
+  .responsive-table tr {
+    width: 100%;
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+
+  .responsive-table tr td:nth-child(1) {
+    text-align: left;
+    background-color: black;
+    color: white;
+  }
+
+  .responsive-table tr td {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .mobile {
+    display: block;
+  }
+}
+
+.responsive-table td {
+  word-break: break-all;
+}
+
+.responsive-table th:nth-child(1) {
+  width: 5%;
+}
+
+.responsive-table th:nth-child(2) {
+  width: 20%;
+}
+
+.responsive-table th:nth-child(3) {
+  width: 15%;
+}
+
+.responsive-table th:nth-child(4) {
+  width: 30%;
+}
+
+.responsive-table th:nth-child(5) {
+  width: 50%;
+}

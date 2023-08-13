@@ -1,0 +1,9 @@
+.rc-input-number-input{
+  outline: none;
+  width: 60px;
+}
+
+.seed .rc-input-number-input{
+  outline: none;
+  width: 100%;
+}
