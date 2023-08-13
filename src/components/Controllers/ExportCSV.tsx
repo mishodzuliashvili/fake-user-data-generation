@@ -10,7 +10,7 @@ const ExportCSV = () => {
     if (region.hasMiddleName) {
       return user;
     } else {
-      const newUser = { ...user };
+      const newUser = { ...user } as any;
       delete newUser.middleName;
       return newUser;
     }
