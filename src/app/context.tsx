@@ -5,6 +5,7 @@ import { generateRandomUsersFactory } from "@/utils/generateRandomUsers";
 import { Region, User } from "@/types";
 import { introduceErrors } from "@/utils/generateErrors";
 import calculatePageSeed from "@/utils/calculatePageSeed";
+import generateRandomSeed from "@/utils/generateRandomSeed";
 
 const TableContext = createContext(
   {} as {
@@ -31,6 +32,10 @@ export function TableProvider({ children }: { children: React.ReactNode }) {
   const [users, setUsers] = useState<User[]>([]);
   const [erroredUsers, setErroredUsers] = useState<User[]>([]);
   const [generateRandomUser, setGenerateRandomUser] = useState<any>(null);
+
+  useEffect(() => {
+    setUserSeed(generateRandomSeed());
+  }, []);
 
   const fetchUsers = (pageSize = USERS_PER_PAGE, pageNum: number) => {
     applySeed(pageNum);
